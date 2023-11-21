@@ -1,0 +1,54 @@
+body {
+  background-image: './Images/logo.png';
+}
+
+.slide-right {
+  overflow: hidden;
+  animation: 3s slide-right;
+}
+
+a:hover {
+  color: aqua;
+}
+
+.nav-item:hover {
+  background-color: aqua;
+}
+
+.nav-item.active {
+  background-color: aqua;
+}
+
+/* @media only screen and (min-width: 992px) {
+  body {
+    overflow: hidden;
+
+  } */
+
+/* .navbar {
+    padding: 0;
+  }
+
+  .navbar .navbar-nav .nav-link {
+    padding: 1em 0.7em;
+  }
+
+  .navbar .navbar-brand {
+    padding: 0 0.8em;
+  }
+
+  .nav-item:hover {
+    background-color: aqua;
+  } */
+/* } */
+
+
+@keyframes slide-right {
+  from {
+    margin-left: -100px;
+  }
+
+  to {
+    margin-right: 100px;
+  }
+}

@@ -1,0 +1,10 @@
+Flask
+flask_cors
+numpy
+pandas
+requests
+scikit-learn
+Pillow
+torch
+torchvision
+Gunicorn

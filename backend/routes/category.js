@@ -4,46 +4,69 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const shortid = require("shortid");
+const upload = multer();
+const KeyPath = "/etc/secrets/service.json";
 var aws = require("aws-sdk");
 var multerS3 = require("multer-s3");
 const path = require("path");
+const stream = require("stream");
 const accesskey = process.env.AWSACCESSKEY
 const awssecret = process.env.AWSSECRETACCESSKEY
 const awsbucket = process.env.AWSBUCKET
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, "./uploads");
-    },
-    filename: function (req, file, cb) {
-        cb(null, shortid.generate() + "-" + file.originalname + "-" + Date.now());
-    },
-});
 
-var upload = multer({ storage });
+//AWS S3 BUCKET METHOD:
 
-const AWS = new aws.S3({
-    accessKeyId: accesskey,
-    secretAccessKey: awssecret,
+
+// const AWS = new aws.S3({
+//     accessKeyId: accesskey,
+//     secretAccessKey: awssecret,
+// });
+// var uploadS3 = multer({
+//     storage: multerS3({
+//         s3: AWS,
+//         bucket: awsbucket,
+//         acl: "public-read",
+//         metadata: function (req, file, cb) {
+//             cb(null, { fieldName: file.fieldname });
+//         },
+//         key: function (req, file, cb) {
+//             cb(null, shortid.generate() + "-" + file.originalname + "-" + Date.now());
+//         },
+//     }),
+// });
+
+//GCP IMAGE UPLOAD METHOD
+
+const SCOPES = [process.env.SCOPES_0, process.env.SCOPES_1];
+const auth = new google.auth.GoogleAuth({
+    keyFile: KeyPath,
+    scopes: SCOPES
 });
-var uploadS3 = multer({
-    storage: multerS3({
-        s3: AWS,
-        bucket: "agriassistbucket",
-        acl: "public-read",
-        metadata: function (req, file, cb) {
-            cb(null, { fieldName: file.fieldname });
+console.log(auth);
+
+const uploadToGoogleDrive = async (fileObject) => {
+    const bufferStream = new stream.PassThrough();
+    bufferStream.end(fileObject.buffer);
+    const response = await google.drive({ version: "v3", auth }).files.create({
+        media: {
+            mimeType: fileObject.mimeType,
+            body: bufferStream,
         },
-        key: function (req, file, cb) {
-            cb(null, shortid.generate() + "-" + file.originalname + "-" + Date.now());
+        requestBody: {
+            name: fileObject.originalname,
+            parents: [process.env.GOOGLE_FOLDER_ID],
         },
-    }),
-});
+        fields: "id,name",
+    });
+    return response.data;
+};
 
 router.post(
     "/postitem",
     requireSignin,
     userMiddleware,
-    uploadS3.array("itemPictures"),
+    // uploadS3.array("itemPicture") /* AWS S3 Bucket upload method calling */
+    upload.any("itemPictures"),
     async (req, res) => {
         // console.log(req)
         console.log("Hitted the POST successfully ");
@@ -51,14 +74,15 @@ router.post(
             console.log("try");
             const { ItemType, ItemName, Price, Quantity } = req.body;
             // console.log(req.files);
-            var itemPictures = [];
-            if (req.files.length > 0) {
-                itemPictures = req.files.map((file) => {
-                    console.log(file.key);
-                    return { img: file.key };
-                });
+            console.log(ItemType);
+            console.log(req.files);
+            console.log(req.body);
+            const { body, files } = req;
+            console.log(body);
+            let itemPictures = [];
+            for (let f = 0; f < files.length; f += 1) {
+                itemPictures.push(await uploadToGoogleDrive(files[f]));
             }
-
             //Saving data to db
 
             const newPost = await postitem.create({
@@ -72,20 +96,7 @@ router.post(
             console.log(newPost._id);
             await newPost.save();
             console.log("save completed");
-            res.status(201).json({ newPost });
-
-            // newPost.save()
-            //     .then((item) => {
-            //         return res.status(201).json({ item });
-            //     })
-            //     .catch((err) => {
-            //         return res.status(400).json({ err });
-            //     })
-            // // newPost.save((error, item) => {
-            //     if (error) return res.status(400).json({ error });
-            //     if (item) return res.status(201).json({ item });
-            // });
-
+            res.status(201).json({ message: "done" });
         } catch (err) {
             console.log(err);
             res.status(401).json({

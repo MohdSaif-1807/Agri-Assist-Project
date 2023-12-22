@@ -17,7 +17,16 @@ const ItemSchema = new Schema(
                 sparse: true
             }
         },
-        itemPictures: [{ img: { type: String, required: false } }],
+        itemPictures: [
+            {
+                id: {
+                    type: String
+                },
+                name: {
+                    type: String
+                }
+            }
+        ],
         price: {
             type: Number,
             required: true,

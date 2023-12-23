@@ -34,7 +34,7 @@ function PredictDisease() {
             const data = new FormData();
             setRes('Your Result is being Progressed..')
             data.append('file', imageUrl['image']);
-            axios.post('http://127.0.0.1:7000/disease-predict', data, {
+            axios.post('https://agriassistflaskbackend.onrender.com/disease-predict', data, {
                 headers: {
                     'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'multipart/form-data'

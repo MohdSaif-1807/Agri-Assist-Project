@@ -11,7 +11,7 @@ function VegeList() {
         setStateInfo(e.target.value);
     }
     useEffect(() => {
-        axios.post('http://localhost:5000/get-item', {
+        axios.post('https://agri-assist-backend.onrender.com/get-item', {
             method: 'POST',
             body: { stateInfo }
         }).then((res) => {

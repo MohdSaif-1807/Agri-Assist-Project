@@ -43,7 +43,7 @@ function Feed() {
         }
         axios(
             {
-                url: "http://localhost:5000/deleteitem",
+                url: "https://agri-assist-backend.onrender.com/deleteitem",
                 method: 'POST',
                 data: dataMap
             }
@@ -63,7 +63,7 @@ function Feed() {
     }
     useEffect(() => {
         axios({
-            url: "http://localhost:5000/getitem",
+            url: "https://agri-assist-backend.onrender.com/getitem",
             method: "GET",
         })
             .then((response) => {
@@ -215,7 +215,7 @@ function Feed() {
             });
             console.log(info);
             axios({
-                url: "http://localhost:5000/postitem",
+                url: "https://agri-assist-backend.onrender.com/postitem",
                 method: "POST",
                 data: info,
                 headers: {

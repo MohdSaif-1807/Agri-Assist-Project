@@ -32,7 +32,7 @@ function Login() {
             IsFarmer: check
         };
         axios({
-            url: "http://localhost:5000/login",
+            url: "https://agri-assist-backend.onrender.com/login",
             method: "POST",
             data: dataMap,
         })

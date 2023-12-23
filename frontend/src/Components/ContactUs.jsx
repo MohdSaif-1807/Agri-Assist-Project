@@ -22,7 +22,7 @@ function ContactUs() {
             Issue: issue
         }
         axios({
-            url: "http://localhost:5000/sendEmail",
+            url: "https://agri-assist-backend.onrender.com/sendEmail",
             method: "POST",
             data: dataMap,
         })

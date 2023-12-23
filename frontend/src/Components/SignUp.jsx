@@ -42,7 +42,7 @@ export default function SignUp() {
             FarmerID: farmerID
         };
         axios({
-            url: "http://localhost:5000/signup",
+            url: "https://agri-assist-backend.onrender.com/signup",
             method: "POST",
             data: dataMap,
         })

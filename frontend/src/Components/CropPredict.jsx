@@ -39,7 +39,7 @@ function CropPredict() {
         data.state = state;
         data.city = city;
         setData({ ...data });
-        axios.post('http://127.0.0.1:7000/crop-predict', data, {
+        axios.post('https://agriassistflaskbackend.onrender.com/crop-predict', data, {
             headers: {
                 'Content-Type': 'application/json',
             }

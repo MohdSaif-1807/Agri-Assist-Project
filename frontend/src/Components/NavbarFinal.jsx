@@ -39,7 +39,7 @@ function NavbarFinal() {
     }, [])
     const handleSignout = () => {
         localStorage.clear();
-        axios.post('http://localhost:5000/signout')
+        axios.post('https://agri-assist-backend.onrender.com/signout')
             .then(() => {
                 console.log("Successfully Log Out");
             })

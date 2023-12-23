@@ -43,7 +43,7 @@ function MarketPlace() {
     const [Found_item, setFound_item] = useState();
     useEffect(() => {
         axios({
-            url: "http://localhost:5000/getitem",
+            url: "https://agri-assist-backend.onrender.com/getitem",
             method: "GET",
         })
             .then((response) => {
@@ -83,7 +83,9 @@ function MarketPlace() {
                                     <Card bsPrefix="item-card">
                                         <Card.Img
                                             variant="top"
-                                            src={`${S3_BUCKET_URL}/${item.itemPictures[0].img}`}
+                                            // src={`${S3_BUCKET_URL}/${item.itemPictures[0].img}`}
+                                            src={`https://drive.google.com/uc?export=view&id=${item.itemPictures[0].id}`}
+
                                         />
                                         <Card.Body bsPrefix="card-body">
                                             <Card.Title
@@ -136,7 +138,9 @@ function MarketPlace() {
                                     <Card bsPrefix="item-card" key={item.name}>
                                         <Card.Img
                                             variant="top"
-                                            src={`${S3_BUCKET_URL}/${item.itemPictures[0].img}`}
+                                            // src={`${S3_BUCKET_URL}/${item.itemPictures[0].img}`}
+                                            src={`https://drive.google.com/uc?export=view&id=${item.itemPictures[0].id}`}
+
                                         />
                                         <Card.Body bsPrefix="card-body">
                                             <Card.Title

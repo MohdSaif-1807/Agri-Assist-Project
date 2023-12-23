@@ -30,7 +30,7 @@ function PostItemModal() {
             });
 
             axios({
-                url: "http://localhost:5000/postitem",
+                url: "https://agri-assist-backend.onrender.com/postitem",
                 method: "POST",
                 data: info,
                 onUploadProgress: (ProgressEvent) => {

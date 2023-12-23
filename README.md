@@ -20,7 +20,7 @@ Welcome to Agri-Assist Project, an innovative agricultural application designed 
 - **Middleware:** Leveraging Express.js for efficient communication between frontend and backend.
 - **Backend:** Powered by Node.js for orchestrating complex operations.
 - **API:** Flask, providing additional functionality and seamless integration.
-- **Database:** MongoDB stores user credentials, while AWS S3 bucket is used for image storage.
+- **Database:** MongoDB stores user credentials, while AWS S3 bucket is used for image storage,Now Google Cloud Platform has been introduced to store images through google-drive API
 
 ## Installation
 

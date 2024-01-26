@@ -93,7 +93,7 @@ function Feed() {
                                     <Card.Img style={{ borderRadius: "25px", width: "100%", height: "100%" }}
                                         variant="top"
                                         // src={`${S3_BUCKET_URL}/${item.itemPictures[0].img}`}
-                                        src={`https://drive.google.com/uc?export=view&id=${item.itemPictures[0].id}`}
+                                        src={`https://lh3.google.com/u/0/d/${item.itemPictures[0].id}`}
                                     />
                                     <Card.Body bsPrefix="card-body" style={{ alignItems: "center" }}>
                                         <Card.Title
